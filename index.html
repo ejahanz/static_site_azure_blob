@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Static Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0072C6, #00ADEF);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      flex: 1 1 280px;
+      max-width: 300px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card h3 {
+      color: #0072C6;
+      margin-bottom: 10px;
+    }
+
+    .cta {
+      background: #0072C6;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      border-radius: 20px;
+      margin-top: 60px;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .cta a {
+      display: inline-block;
+      margin-top: 20px;
+      background: white;
+      color: #0072C6;
+      padding: 12px 30px;
+      font-weight: bold;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    .cta a:hover {
+      background: #f0f0f0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      .cta h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🚀 Welcome to my Azure Static Web</h1>
+    <p>Deploy fast. Scale smart. Powered by Azure Blob Storage + Terraform.</p>
+  </header>
+
+  <section>
+    <h2 style="text-align: center; font-size: 2rem;">🌟 Features</h2>
+    <div class="features">
+      <div class="card">
+        <h3>⚡ Super Fast Hosting</h3>
+        <p>Blazing fast load times thanks to globally replicated Blob Storage and CDN-ready architecture.</p>
+      </div>
+      <div class="card">
+        <h3>🔐 Secure by Default</h3>
+        <p>HTTPS enabled, custom domains supported, and locked-down with Azure’s enterprise-grade security.</p>
+      </div>
+      <div class="card">
+        <h3>📦 Powered by Terraform</h3>
+        <p>Infrastructure as Code ensures easy replication, versioning, and scalability of your deployments.</p>
+      </div>
+      <div class="card">
+        <h3>🎯 Developer-Friendly</h3>
+        <p>Deploy from GitHub in seconds. No servers, no hassle. Just pure content delivery at scale.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Ready to Build with Azure?</h2>
+    <p>Fork this repo, deploy your own site, and go live in minutes!</p>
+    <a href="https://github.com/ejahanz/static_site_azure_blob" target="_blank">🌐 View on GitHub</a>
+  </section>
+
+  <footer>
+    Built with 💙 using Azure and Terraform. Hosted on Azure Static Web.
+  </footer>
+
+</body>
+</html>
