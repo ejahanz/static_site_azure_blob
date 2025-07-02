@@ -23,12 +23,12 @@ Deploy a simple and scalable **static website** using **Azure Blob Storage** —
 ## 📦 Project Structure
 
 
-azure-static-website/
-├── main.tf           # Core Terraform configuration
-├── variables.tf      # (Optional) Variables for customization
-├── outputs.tf        # Output website URL
-├── index.html        # Home page
-├── error.html        # 404 error page
+azure-static-website/ <br>
+├── main.tf           # Core Terraform configuration <br> 
+├── variables.tf      # (Optional) Variables for customization <br>
+├── outputs.tf        # Output website URL <br>
+├── index.html        # Home page <br>
+├── error.html        # 404 error page <br>
 └── README.md         # You're here!
 
 
