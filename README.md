@@ -1,26 +1,32 @@
-# Static Website on Azure Blob Storage (via Terraform)
+# 🚀 Azure Static Website with Terraform
 
-## Overview
-This project uses Terraform to deploy a static website to Azure Blob Storage.
+Deploy a simple and scalable **static website** using **Azure Blob Storage** — fully automated with **Terraform**!
 
-## What It Does
-- Creates a Resource Group
-- Deploys a Storage Account with static website hosting
-- Outputs the website URL
+---
 
-## Prerequisites
-- Terraform installed
-- Azure CLI authenticated (`az login`)
-- GitHub account
+## 🧰 Tech Stack
 
-## Deploy
+- 🌩️ **Azure Blob Storage** – for hosting the static site
+- 🏗️ **Terraform** – infrastructure as code
+- 🧪 **Azure CLI** – for content upload
+- 📄 **HTML** – minimal front-end files
 
-terraform init
-terraform apply -auto-approve
+---
 
-## Clean up Terraform
+## 📸 Demo
 
-terraform destroy
+![Static Website Demo](https://raw.githubusercontent.com/yourusername/azure-static-website/main/demo-screenshot.png)  
+*(Replace with your screenshot after deployment)*
 
+---
+
+## 📦 Project Structure
 
 ```bash
+azure-static-website/
+├── main.tf           # Core Terraform configuration
+├── variables.tf      # (Optional) Variables for customization
+├── outputs.tf        # Output website URL
+├── index.html        # Home page
+├── error.html        # 404 error page
+└── README.md         # You're here!
