@@ -3,7 +3,7 @@ output "static_website_url" {
 }
 
 output "cdn_endpoint" {
-  value = azurerm_cdn_endpoint.cdn_endpoint.host_name
+  value = azurerm_cdn_endpoint.cdn_endpoint.host_names[0]
 }
 
 output "custom_domain_url" {
