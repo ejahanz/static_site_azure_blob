@@ -46,11 +46,11 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
   resource_group_name = azurerm_resource_group.rg.name
   is_http_allowed     = false
   is_https_allowed    = true
-  origin_host_header  = azurerm_storage_account_static_website.website.primary_web_host
+  origin_host_header  = azurerm_storage_account_static_website.website.primary_web_endpoint
   origin_path         = ""
   origin {
     name      = "blobstaticorigin"
-    host_name = azurerm_storage_account_static_website.website.primary_web_host
+    host_name = azurerm_storage_account_static_website.website.primary_web_endpoint
     https_port = 443
   }
   content_types_to_compress = ["text/html", "text/css", "application/javascript"]
