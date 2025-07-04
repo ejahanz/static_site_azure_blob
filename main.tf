@@ -41,7 +41,7 @@ resource "azurerm_cdn_endpoint" "cdn_endpoint" {
   profile_name        = azurerm_cdn_profile.cdn.name
   location            = "global"
   resource_group_name = azurerm_resource_group.rg.name
-  is_http_allowed     = false
+  is_http_allowed     = true
   is_https_allowed    = true
   origin_host_header = "staticsite88c8e1d2.z44.web.core.windows.net"
   origin_path         = ""
