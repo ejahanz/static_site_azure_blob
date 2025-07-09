@@ -32,7 +32,7 @@ resource "random_id" "unique" {
 resource "azurerm_cdn_frontdoor_profile" "frontdoor" {
   name                = "frontdoor-${random_id.unique.hex}"
   resource_group_name = azurerm_resource_group.rg.name
-  sku_name            = "Standard_AzureFrontDoor"  # Downgraded to Standard for cost savings
+  sku_name            = "Standard_AzureFrontDoor" # Downgraded to Standard for cost savings
 }
 
 resource "azurerm_cdn_frontdoor_endpoint" "frontdoor_endpoint" {

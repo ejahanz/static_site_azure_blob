@@ -15,11 +15,11 @@ resource "azurerm_network_security_rule" "allow_https_inbound" {
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
-  source_port_range          = "*"
-  destination_port_range     = "443"
-  source_address_prefix      = var.https_source_address_prefix
-  destination_address_prefix = "*"
-  resource_group_name        = var.resource_group_name
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = var.https_source_address_prefix
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
@@ -31,11 +31,11 @@ resource "azurerm_network_security_rule" "allow_http_inbound" {
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
-  source_port_range          = "*"
-  destination_port_range     = "80"
-  source_address_prefix      = var.http_source_address_prefix
-  destination_address_prefix = "*"
-  resource_group_name        = var.resource_group_name
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = var.http_source_address_prefix
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
@@ -47,11 +47,11 @@ resource "azurerm_network_security_rule" "deny_common_attack_ports" {
   direction                   = "Inbound"
   access                      = "Deny"
   protocol                    = "*"
-  source_port_range          = "*"
-  destination_port_ranges    = ["22", "23", "135", "445", "1433", "3389", "5432", "5985", "5986"]
-  source_address_prefix      = "*"
-  destination_address_prefix = "*"
-  resource_group_name        = var.resource_group_name
+  source_port_range           = "*"
+  destination_port_ranges     = ["22", "23", "135", "445", "1433", "3389", "5432", "5985", "5986"]
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
@@ -63,11 +63,11 @@ resource "azurerm_network_security_rule" "allow_azure_outbound" {
   direction                   = "Outbound"
   access                      = "Allow"
   protocol                    = "*"
-  source_port_range          = "*"
-  destination_port_range     = "*"
-  source_address_prefix      = "*"
-  destination_address_prefix = "AzureCloud"
-  resource_group_name        = var.resource_group_name
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "AzureCloud"
+  resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
@@ -80,10 +80,10 @@ resource "azurerm_network_security_rule" "custom_rules" {
   direction                   = each.value.direction
   access                      = each.value.access
   protocol                    = each.value.protocol
-  source_port_range          = each.value.source_port_range
-  destination_port_range     = each.value.destination_port_range
-  source_address_prefix      = each.value.source_address_prefix
-  destination_address_prefix = each.value.destination_address_prefix
-  resource_group_name        = var.resource_group_name
+  source_port_range           = each.value.source_port_range
+  destination_port_range      = each.value.destination_port_range
+  source_address_prefix       = each.value.source_address_prefix
+  destination_address_prefix  = each.value.destination_address_prefix
+  resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
