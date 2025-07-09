@@ -67,45 +67,44 @@ resource "azurerm_cdn_frontdoor_origin" "frontdoor_origin" {
   enabled                       = true
 
   certificate_name_check_enabled = true
-  host_name                      = "staticsite88c8e1d2.z44.web.core.windows.net"
+  host_name                      = azurerm_storage_account.storage.primary_web_host
   http_port                      = 80
   https_port                     = 443
-  origin_host_header             = "staticsite88c8e1d2.z44.web.core.windows.net"
+  origin_host_header             = azurerm_storage_account.storage.primary_web_host
   priority                       = 1
   weight                         = 1000
 }
 
-# Note: Custom domain and route resources are commented out due to Terraform conflicts
-# These have been manually configured in Azure Portal
-# resource "azurerm_cdn_frontdoor_custom_domain" "frontdoor_custom_domain" {
-#   name                     = "fd-custom-domain-${random_id.unique.hex}"
-#   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.frontdoor.id
-#   dns_zone_id              = null
-#   host_name                = "azureblob.cloudkraft.nz"
-#
-#   tls {
-#     certificate_type = "ManagedCertificate"
-#   }
-# }
+# Custom domain managed by Terraform
+resource "azurerm_cdn_frontdoor_custom_domain" "frontdoor_custom_domain" {
+  name                     = "fd-custom-domain-${random_id.unique.hex}"
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.frontdoor.id
+  dns_zone_id              = null
+  host_name                = "azureblob.cloudkraft.nz"
 
-# resource "azurerm_cdn_frontdoor_route" "frontdoor_route" {
-#   name                          = "fd-route-${random_id.unique.hex}"
-#   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontdoor_endpoint.id
-#   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.frontdoor_origin_group.id
-#   cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.frontdoor_origin.id]
-#   enabled                       = true
-#
-#   forwarding_protocol    = "HttpsOnly"
-#   https_redirect_enabled = true
-#   patterns_to_match      = ["/*"]
-#   supported_protocols    = ["Http", "Https"]
-#
-#   cdn_frontdoor_custom_domain_ids = [azurerm_cdn_frontdoor_custom_domain.frontdoor_custom_domain.id]
-#   link_to_default_domain          = false
-#
-#   # Add comprehensive security headers for XSS protection
-#   cdn_frontdoor_rule_set_ids = [azurerm_cdn_frontdoor_rule_set.security_headers.id]
-# }
+  tls {
+    certificate_type = "ManagedCertificate"
+  }
+}
+
+resource "azurerm_cdn_frontdoor_route" "frontdoor_route" {
+  name                          = "fd-route-${random_id.unique.hex}"
+  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.frontdoor_endpoint.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.frontdoor_origin_group.id
+  cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.frontdoor_origin.id]
+  enabled                       = true
+
+  forwarding_protocol    = "HttpsOnly"
+  https_redirect_enabled = true
+  patterns_to_match      = ["/*"]
+  supported_protocols    = ["Http", "Https"]
+
+  cdn_frontdoor_custom_domain_ids = [azurerm_cdn_frontdoor_custom_domain.frontdoor_custom_domain.id]
+  link_to_default_domain          = false
+
+  # Add comprehensive security headers for XSS protection
+  cdn_frontdoor_rule_set_ids = [azurerm_cdn_frontdoor_rule_set.security_headers.id]
+}
 
 # Rule Set for Security Headers including XSS protection
 resource "azurerm_cdn_frontdoor_rule_set" "security_headers" {
@@ -126,7 +125,7 @@ resource "azurerm_cdn_frontdoor_rule" "csp_header" {
     response_header_action {
       header_action = "Append"
       header_name   = "Content-Security-Policy"
-      value         = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+      value         = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
     }
   }
 
@@ -347,21 +346,20 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "frontdoor_waf" {
   }
 }
 
-# Note: Security policy association is commented out due to manual configuration
-# resource "azurerm_cdn_frontdoor_security_policy" "frontdoor_security_policy" {
-#   name                     = "fd-security-policy-${random_id.unique.hex}"
-#   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.frontdoor.id
-#
-#   security_policies {
-#     firewall {
-#       cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.frontdoor_waf.id
-#
-#       association {
-#         domain {
-#           cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.frontdoor_custom_domain.id
-#         }
-#         patterns_to_match = ["/*"]
-#       }
-#     }
-#   }
-# }
+resource "azurerm_cdn_frontdoor_security_policy" "frontdoor_security_policy" {
+  name                     = "fd-security-policy-${random_id.unique.hex}"
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.frontdoor.id
+
+  security_policies {
+    firewall {
+      cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.frontdoor_waf.id
+
+      association {
+        domain {
+          cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.frontdoor_custom_domain.id
+        }
+        patterns_to_match = ["/*"]
+      }
+    }
+  }
+}
